@@ -14,6 +14,13 @@
         "cwd": "apps/mac"
       }
     },
+    "icon": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "scripts/make-icon.sh",
+        "cwd": "apps/mac"
+      }
+    },
     "build": {
       "executor": "nx:run-commands",
       "dependsOn": [

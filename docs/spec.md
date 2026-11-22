@@ -172,7 +172,7 @@ Nx targets (`nx:run-commands`):
 
 ## Deferred / future
 
-- Sparkle auto-update, DMG background art, app icon
+- Sparkle auto-update, DMG background art, menu bar glyph matching the app icon
 - Website with download page (`apps/web`)
 - Playing registers from inside a recording (as references, with recursion guards)
 - Window-relative mouse coordinates

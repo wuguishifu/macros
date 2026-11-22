@@ -54,5 +54,7 @@ targets:
         PRODUCT_BUNDLE_IDENTIFIER: dev.wuguishifu.macros
         PRODUCT_NAME: Macros
         GENERATE_INFOPLIST_FILE: NO
+        # Generated from Assets/AppIcon.svg by `pnpm nx run mac:icon`.
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         SWIFT_STRICT_CONCURRENCY: complete
     scheme: {}

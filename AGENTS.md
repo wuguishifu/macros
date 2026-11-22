@@ -40,6 +40,8 @@ macOS menu bar app for recording and replaying vim-style keyboard/mouse macros i
 - `pnpm nx run mac:build`: regenerates the Xcode project, then builds Debug into `dist/apps/mac`
 - `pnpm nx run mac:run`: build, kill any running copy, launch
 - `pnpm nx run-many -t lint` / `-t format`: `swift format` with the root `.swift-format`
+- `pnpm nx run mac:icon`: regenerate `Macros/Assets.xcassets/AppIcon.appiconset` from `apps/mac/Assets/AppIcon.svg`
+  (needs `rsvg-convert`, from `brew install librsvg`). Commit the generated PNGs.
 - Requires Xcode 26+ and `xcodegen` (Homebrew)
 
 ## Conventions and gotchas
