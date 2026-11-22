@@ -5,3 +5,5 @@ packages:
 allowBuilds:
   '@swc/core': true
   nx: true
+  sharp: false
+  unrs-resolver: false

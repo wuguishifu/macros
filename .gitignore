@@ -61,3 +61,7 @@ xcuserdata
 *.cer
 *.p8
 *.mobileprovision
+
+# Next.js
+.next
+out

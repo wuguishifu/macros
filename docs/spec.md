@@ -153,15 +153,17 @@ apps/mac (Macros.app)                     libs/core (MacrosCore, SwiftPM)
 ```
 apps/mac/            Nx project "mac": XcodeGen project.yml, app sources, QA.md
 libs/core/           Nx project "core": MacrosCore Swift package + tests
+apps/web/            Nx project "web": Next.js landing page with download button
 docs/spec.md         this file
 ```
 
-Nx targets (`nx:run-commands`):
+Nx targets (`nx:run-commands`; `web`'s are mostly inferred by `@nx/next` and `@nx/eslint`):
 
 | Project | Targets |
 |---|---|
 | `mac` | `generate` (xcodegen), `build`, `run`, `lint`, `format`, `release` |
 | `core` | `build`, `test`, `lint`, `format` |
+| `web` | `dev`, `build`, `start`, `lint`, `format` |
 
 - The generated `Macros.xcodeproj` is gitignored.
 - Unit tests (Swift Testing) cover the engine/chords, recorder, schedule, player and storage, using fake
@@ -173,7 +175,6 @@ Nx targets (`nx:run-commands`):
 ## Deferred / future
 
 - Sparkle auto-update, DMG background art, menu bar glyph matching the app icon
-- Website with download page (`apps/web`)
 - Playing registers from inside a recording (as references, with recursion guards)
 - Window-relative mouse coordinates
 - Event editor (trim first)

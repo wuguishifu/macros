@@ -33,13 +33,17 @@ macOS menu bar app for recording and replaying vim-style keyboard/mouse macros i
   storage. No AppKit. All logic that can be unit-tested lives here.
 - `apps/mac/` (Nx `mac`): the app. XcodeGen `project.yml` → `Macros.xcodeproj` (generated, gitignored). Event tap,
   CGEvent conversion, HUD, menu, settings, permissions. Manual checklist in `apps/mac/QA.md`.
+- `apps/web/` (Nx `web`): Next.js (App Router) landing page. The download button links to the `.dmg` on the latest
+  GitHub release (fetched server-side, revalidated every 10 min); `/download` redirects to the same file. App icon
+  copies live in `public/app-icon.svg` and `src/app/{icon,apple-icon}.png`, so update them if the icon changes.
 
 ## Commands
 
 - `pnpm nx test core`: unit tests (Swift Testing)
 - `pnpm nx run mac:build`: regenerates the Xcode project, then builds Debug into `dist/apps/mac`
 - `pnpm nx run mac:run`: build, kill any running copy, launch
-- `pnpm nx run-many -t lint` / `-t format`: `swift format` with the root `.swift-format`
+- `pnpm nx run-many -t lint` / `-t format`: `swift format` with the root `.swift-format`; ESLint / Prettier for `web`
+- `pnpm nx dev web` / `pnpm nx build web`: run or build the website
 - `pnpm nx run mac:icon`: regenerate `Macros/Assets.xcassets/AppIcon.appiconset` from `apps/mac/Assets/AppIcon.svg`
   (needs `rsvg-convert`, from `brew install librsvg`). Commit the generated PNGs.
 - Requires Xcode 26+ and `xcodegen` (Homebrew)
