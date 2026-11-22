@@ -20,6 +20,8 @@ settings:
   configs:
     Release:
       CODE_SIGN_IDENTITY: Developer ID Application
+      # Notarization requires a secure timestamp; plain (non-archive) builds don't add one by default.
+      OTHER_CODE_SIGN_FLAGS: --timestamp
 
 packages:
   MacrosCore:

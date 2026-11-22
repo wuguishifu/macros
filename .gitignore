@@ -55,3 +55,9 @@ apps/mac/Macros.xcodeproj
 DerivedData
 xcuserdata
 *.xcuserstate
+
+# Signing material
+*.p12
+*.cer
+*.p8
+*.mobileprovision
