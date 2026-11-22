@@ -48,3 +48,10 @@ Thumbs.db
 .nx/polygraph
 .nx/self-healing
 .nx/migrate-runs
+# Swift / Xcode
+apps/mac/Macros.xcodeproj
+.build
+.swiftpm
+DerivedData
+xcuserdata
+*.xcuserstate

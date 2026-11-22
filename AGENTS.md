@@ -21,3 +21,35 @@
 - The `nx-generate` skill handles generator discovery internally - don't call nx_docs just to look up generator syntax
 
 <!-- nx configuration end-->
+
+# Macros
+
+macOS menu bar app for recording and replaying vim-style keyboard/mouse macros in registers. Full spec:
+`docs/spec.md`. Read it before changing behaviour.
+
+## Layout
+
+- `libs/core/` (Nx `core`): `MacrosCore` Swift package. Engine/chord state machine, recorder, player, schedule,
+  storage. No AppKit. All logic that can be unit-tested lives here.
+- `apps/mac/` (Nx `mac`): the app. XcodeGen `project.yml` → `Macros.xcodeproj` (generated, gitignored). Event tap,
+  CGEvent conversion, HUD, menu, settings, permissions. Manual checklist in `apps/mac/QA.md`.
+
+## Commands
+
+- `pnpm nx test core`: unit tests (Swift Testing)
+- `pnpm nx run mac:build`: regenerates the Xcode project, then builds Debug into `dist/apps/mac`
+- `pnpm nx run mac:run`: build, kill any running copy, launch
+- `pnpm nx run-many -t lint` / `-t format`: `swift format` with the root `.swift-format`
+- Requires Xcode 26+ and `xcodegen` (Homebrew)
+
+## Conventions and gotchas
+
+- Swift 6 language mode with complete strict concurrency. Types shared across the tap, player and main threads are
+  lock-protected `@unchecked Sendable`. Keep the tap callback fast: macOS disables slow taps.
+- Signing: always team `7C3LJCLXTY`. Never use the other Apple Development identity in the keychain. Debug builds
+  must be dev-signed (not ad-hoc), or the Accessibility grant is lost on every rebuild.
+- Events Macros posts are tagged with `SyntheticTag.value` in `eventSourceUserData`. The engine passes tagged events
+  through and never records them.
+- Register files are JSON with `schemaVersion`. Bump `Macro.currentSchemaVersion` and add migration if the format
+  changes.
+- No CI yet. Release (`mac:release`) is a stub.

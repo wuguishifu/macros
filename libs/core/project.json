@@ -1,0 +1,49 @@
+{
+  "name": "core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "libs/core/Sources",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "swift build",
+        "cwd": "libs/core"
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/Package.swift",
+        "{projectRoot}/Sources/**/*.swift",
+        "{projectRoot}/Tests/**/*.swift"
+      ],
+      "options": {
+        "command": "swift test",
+        "cwd": "libs/core"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "cache": true,
+      "inputs": [
+        "{projectRoot}/Package.swift",
+        "{projectRoot}/Sources/**/*.swift",
+        "{projectRoot}/Tests/**/*.swift",
+        "{workspaceRoot}/.swift-format"
+      ],
+      "options": {
+        "command": "swift format lint --strict --recursive Package.swift Sources Tests",
+        "cwd": "libs/core"
+      }
+    },
+    "format": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "swift format --in-place --recursive Package.swift Sources Tests",
+        "cwd": "libs/core"
+      }
+    }
+  }
+}

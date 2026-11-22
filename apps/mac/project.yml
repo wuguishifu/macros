@@ -1,0 +1,54 @@
+name: Macros
+options:
+  bundleIdPrefix: dev.wuguishifu
+  deploymentTarget:
+    macOS: "14.0"
+  createIntermediateGroups: true
+  generateEmptyDirectories: false
+
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    MACOSX_DEPLOYMENT_TARGET: "14.0"
+    # Bo's own team. Never the other identity in the keychain (contract work).
+    DEVELOPMENT_TEAM: 7C3LJCLXTY
+    CODE_SIGN_STYLE: Manual
+    CODE_SIGN_IDENTITY: Apple Development
+    ENABLE_HARDENED_RUNTIME: YES
+    MARKETING_VERSION: 0.1.0
+    CURRENT_PROJECT_VERSION: 1
+  configs:
+    Release:
+      CODE_SIGN_IDENTITY: Developer ID Application
+
+packages:
+  MacrosCore:
+    path: ../../libs/core
+
+targets:
+  Macros:
+    type: application
+    platform: macOS
+    sources:
+      - path: Macros
+    dependencies:
+      - package: MacrosCore
+    info:
+      path: Macros/Info.plist
+      properties:
+        CFBundleDisplayName: Macros
+        CFBundleShortVersionString: $(MARKETING_VERSION)
+        CFBundleVersion: $(CURRENT_PROJECT_VERSION)
+        LSUIElement: true
+        LSApplicationCategoryType: public.app-category.productivity
+        NSHumanReadableCopyright: Copyright © 2026 Bo Bramer. MIT License.
+    entitlements:
+      path: Macros/Macros.entitlements
+      properties: {}
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: dev.wuguishifu.macros
+        PRODUCT_NAME: Macros
+        GENERATE_INFOPLIST_FILE: NO
+        SWIFT_STRICT_CONCURRENCY: complete
+    scheme: {}
