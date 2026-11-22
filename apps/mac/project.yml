@@ -15,7 +15,9 @@ settings:
     CODE_SIGN_STYLE: Manual
     CODE_SIGN_IDENTITY: Apple Development
     ENABLE_HARDENED_RUNTIME: YES
-    MARKETING_VERSION: 0.1.0
+    # Placeholders for local builds. Real versions live only in git tags (vX.Y.Z); the Release workflow passes
+    # VERSION/BUILD_NUMBER to scripts/release.sh, which overrides these.
+    MARKETING_VERSION: 0.0.0
     CURRENT_PROJECT_VERSION: 1
   configs:
     Release:

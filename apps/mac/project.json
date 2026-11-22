@@ -22,6 +22,11 @@
       "options": {
         "command": "xcodebuild -project Macros.xcodeproj -scheme Macros -configuration Debug -destination 'generic/platform=macOS' -derivedDataPath ../../dist/apps/mac -quiet build",
         "cwd": "apps/mac"
+      },
+      "configurations": {
+        "ci": {
+          "command": "xcodebuild -project Macros.xcodeproj -scheme Macros -configuration Debug -destination 'generic/platform=macOS' -derivedDataPath ../../dist/apps/mac -quiet CODE_SIGNING_ALLOWED=NO build"
+        }
       }
     },
     "run": {

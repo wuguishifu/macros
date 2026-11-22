@@ -5,6 +5,7 @@
 #   NOTARY_KEY + NOTARY_KEY_ID + NOTARY_ISSUER   App Store Connect API key (.p8 path) — for CI
 #   NOTARY_PROFILE                               notarytool keychain profile (default: macros-notary)
 #
+# VERSION (X.Y.Z) and BUILD_NUMBER override MARKETING_VERSION / CURRENT_PROJECT_VERSION from project.yml.
 # SIGN_IDENTITY overrides the signing identity used for the DMG.
 set -euo pipefail
 
@@ -44,15 +45,22 @@ step "Generating Xcode project"
 (cd "$APP_DIR" && xcodegen generate --quiet)
 PROJECT="$APP_DIR/Macros.xcodeproj"
 
-VERSION="$(xcodebuild -project "$PROJECT" -scheme Macros -configuration Release -showBuildSettings 2>/dev/null |
-    awk '$1 == "MARKETING_VERSION" { print $3; exit }')"
-echo "Version $VERSION"
+VERSION="${VERSION:-$(xcodebuild -project "$PROJECT" -scheme Macros -configuration Release -showBuildSettings \
+    2>/dev/null | awk '$1 == "MARKETING_VERSION" { print $3; exit }')}"
+if [[ ! "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    echo "VERSION must be X.Y.Z, got '$VERSION'" >&2
+    exit 1
+fi
+VERSION_SETTINGS=("MARKETING_VERSION=$VERSION")
+[[ -n "${BUILD_NUMBER:-}" ]] && VERSION_SETTINGS+=("CURRENT_PROJECT_VERSION=$BUILD_NUMBER")
+echo "Version $VERSION (build ${BUILD_NUMBER:-from project.yml})"
 
 step "Archiving"
 xcodebuild archive \
     -project "$PROJECT" -scheme Macros -configuration Release \
     -destination 'generic/platform=macOS' \
-    -archivePath "$OUT/Macros.xcarchive" -quiet
+    -archivePath "$OUT/Macros.xcarchive" -quiet \
+    "${VERSION_SETTINGS[@]}"
 
 step "Exporting with Developer ID"
 xcodebuild -exportArchive \

@@ -167,11 +167,12 @@ Nx targets (`nx:run-commands`):
 - Unit tests (Swift Testing) cover the engine/chords, recorder, schedule, player and storage, using fake
   `EventSink`/`TimeSource`/`PlaybackRunner`.
 - The real tap, permissions and HUD are covered by the manual checklist in `apps/mac/QA.md`.
-- CI is deferred until the app works locally.
+- CI: `ci.yml` (lint, test, unsigned build) on PRs and pushes to main. Releases: the dispatched `release.yml` (see
+  `docs/releasing.md`).
 
 ## Deferred / future
 
-- CI (GitHub Actions: lint/test/build on PR; run `mac:release` with API-key secrets on tag), Sparkle
+- Sparkle auto-update, DMG background art, app icon
 - Website with download page (`apps/web`)
 - Playing registers from inside a recording (as references, with recursion guards)
 - Window-relative mouse coordinates

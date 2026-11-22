@@ -1,0 +1,35 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_call:
+
+concurrency:
+  group: ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: macos-26
+    timeout-minutes: 30
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup
+        uses: ./.github/actions/setup-macos
+
+      - name: lint
+        run: pnpm nx run-many -t lint
+
+      - name: test
+        run: pnpm nx run-many -t test
+
+      # Unsigned: CI has no Apple Development identity. Signing is exercised by the Release workflow.
+      - name: build
+        run: pnpm nx run mac:build -c ci

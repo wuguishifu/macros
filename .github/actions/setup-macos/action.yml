@@ -1,0 +1,32 @@
+name: Set up macOS toolchain
+description: Xcode info, XcodeGen, pnpm and workspace dependencies for building Macros.
+
+runs:
+  using: composite
+  steps:
+    - name: xcode
+      shell: bash
+      run: |
+        xcodebuild -version
+        swift --version
+
+    - name: xcodegen
+      shell: bash
+      env:
+        HOMEBREW_NO_AUTO_UPDATE: "1"
+        HOMEBREW_NO_INSTALL_CLEANUP: "1"
+      run: brew install xcodegen
+
+    # Version comes from "packageManager" in package.json.
+    - name: pnpm
+      uses: pnpm/action-setup@v4
+
+    - name: node
+      uses: actions/setup-node@v4
+      with:
+        node-version: 24
+        cache: pnpm
+
+    - name: install
+      shell: bash
+      run: pnpm install --frozen-lockfile

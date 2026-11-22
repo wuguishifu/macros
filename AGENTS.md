@@ -52,5 +52,8 @@ macOS menu bar app for recording and replaying vim-style keyboard/mouse macros i
   through and never records them.
 - Register files are JSON with `schemaVersion`. Bump `Macro.currentSchemaVersion` and add migration if the format
   changes.
-- `pnpm nx run mac:release` (`apps/mac/scripts/release.sh`): archive → Developer ID export → notarize + staple app → DMG → sign, notarize + staple DMG → `dist/apps/mac/release/Macros-<version>.{dmg,zip}`. Uses the `macros-notary` notarytool keychain profile, or `NOTARY_KEY`/`NOTARY_KEY_ID`/`NOTARY_ISSUER` env vars (for CI). Bump `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` in `apps/mac/project.yml` per release.
-- No CI yet.
+- Releases: dispatch the **Release** workflow (`gh workflow run release.yml -f version-bump-type=patch`). Versions
+  live only in `vX.Y.Z` git tags (computed by `wuguishifu/version-bump-workflow`). The `MARKETING_VERSION` in
+  `project.yml` is a local placeholder. `pnpm nx run mac:release` (`apps/mac/scripts/release.sh`) archives,
+  notarizes and builds the DMG locally or in CI. See `docs/releasing.md` for the pipeline and required secrets.
+- CI (`.github/workflows/ci.yml`) runs lint, tests and an unsigned build (`mac:build -c ci`) on PRs and pushes to main.
