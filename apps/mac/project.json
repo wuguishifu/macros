@@ -3,7 +3,9 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/mac/Macros",
-  "implicitDependencies": ["core"],
+  "implicitDependencies": [
+    "core"
+  ],
   "targets": {
     "generate": {
       "executor": "nx:run-commands",
@@ -14,7 +16,9 @@
     },
     "build": {
       "executor": "nx:run-commands",
-      "dependsOn": ["generate"],
+      "dependsOn": [
+        "generate"
+      ],
       "options": {
         "command": "xcodebuild -project Macros.xcodeproj -scheme Macros -configuration Debug -destination 'generic/platform=macOS' -derivedDataPath ../../dist/apps/mac -quiet build",
         "cwd": "apps/mac"
@@ -22,7 +26,9 @@
     },
     "run": {
       "executor": "nx:run-commands",
-      "dependsOn": ["build"],
+      "dependsOn": [
+        "build"
+      ],
       "options": {
         "command": "pkill -x Macros || true; open dist/apps/mac/Build/Products/Debug/Macros.app"
       }
@@ -30,7 +36,10 @@
     "lint": {
       "executor": "nx:run-commands",
       "cache": true,
-      "inputs": ["{projectRoot}/Macros/**/*.swift", "{workspaceRoot}/.swift-format"],
+      "inputs": [
+        "{projectRoot}/Macros/**/*.swift",
+        "{workspaceRoot}/.swift-format"
+      ],
       "options": {
         "command": "swift format lint --strict --recursive Macros",
         "cwd": "apps/mac"
@@ -46,7 +55,7 @@
     "release": {
       "executor": "nx:run-commands",
       "options": {
-        "command": "echo 'mac:release is not implemented yet (archive -> Developer ID sign -> notarize -> staple -> DMG). See docs/spec.md.' && exit 1"
+        "command": "apps/mac/scripts/release.sh"
       }
     }
   }

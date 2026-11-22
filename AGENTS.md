@@ -52,4 +52,5 @@ macOS menu bar app for recording and replaying vim-style keyboard/mouse macros i
   through and never records them.
 - Register files are JSON with `schemaVersion`. Bump `Macro.currentSchemaVersion` and add migration if the format
   changes.
-- No CI yet. Release (`mac:release`) is a stub.
+- `pnpm nx run mac:release` (`apps/mac/scripts/release.sh`): archive → Developer ID export → notarize + staple app → DMG → sign, notarize + staple DMG → `dist/apps/mac/release/Macros-<version>.{dmg,zip}`. Uses the `macros-notary` notarytool keychain profile, or `NOTARY_KEY`/`NOTARY_KEY_ID`/`NOTARY_ISSUER` env vars (for CI). Bump `MARKETING_VERSION`/`CURRENT_PROJECT_VERSION` in `apps/mac/project.yml` per release.
+- No CI yet.

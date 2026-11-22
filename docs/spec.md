@@ -160,7 +160,7 @@ Nx targets (`nx:run-commands`):
 
 | Project | Targets |
 |---|---|
-| `mac` | `generate` (xcodegen), `build`, `run`, `lint`, `format`, `release` (stub) |
+| `mac` | `generate` (xcodegen), `build`, `run`, `lint`, `format`, `release` |
 | `core` | `build`, `test`, `lint`, `format` |
 
 - The generated `Macros.xcodeproj` is gitignored.
@@ -171,7 +171,7 @@ Nx targets (`nx:run-commands`):
 
 ## Deferred / future
 
-- CI (GitHub Actions: lint/test/build on PR), release automation (archive → sign → notarize → staple → DMG), Sparkle
+- CI (GitHub Actions: lint/test/build on PR; run `mac:release` with API-key secrets on tag), Sparkle
 - Website with download page (`apps/web`)
 - Playing registers from inside a recording (as references, with recursion guards)
 - Window-relative mouse coordinates
