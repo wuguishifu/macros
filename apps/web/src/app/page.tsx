@@ -171,7 +171,6 @@ export default function Index() {
         </a>
         <nav className={styles.nav}>
           <a href="#how">How it works</a>
-          <a href="#uses">Use cases</a>
           <a href="#shortcuts">Shortcuts</a>
           <a href={REPO_URL}>GitHub</a>
         </nav>
